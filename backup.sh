@@ -20,40 +20,40 @@ folder_paths=("Folder1" "Folder2")
 backup_path="BACKUPPATH"
 
 function backup() {
-	for db_name in ${db_names[*]}; do
-		if [ -e $backup_path/$db_name$DATE.sql ]; then
-			echo -e "\e[33m[$db_name] database backup skipped!\e[39m"
-		else
-			echo -e "\e[33m[$db_name] database backup initialized\e[39m"
-			# Check if the last character of backup_path is a "/", if not add it.
-			if [ "${backup_path:${#backup_path}-1:1}" != "/" ]; then
-				backup_path=$backup_path/
-			fi
-			sudo mysqldump --lock-tables -h $db_host -u $db_user -p$db_pass $db_name > $backup_path$db_name$DATE.sql
-			if [ $? == 0 ]; then
-				echo -e "\e[32m[$db_name] database backup successful!\e[39m"
-			else
-				echo -e "\e[91m[$db_name] database backup failed!\e[39m"
-			fi
-		fi
-	done
-	for folder_path in ${folder_paths[*]}; do
-		# Check if the last character of backup_path is a "/", if yes delete it.
-		if [ "${folder_path:${#folder_path}-1:1}" == "/" ]; then
-			folder_path="${folder_path::-1}"
-		fi
-		if [ -e $backup_path/$folder_path$DATE.tar.gz ]; then
-			echo -e "\e[33m[$folder_path] backup skipped!\e[39m"
-		else
-			echo -e "\e[33m[$folder_path] backup initialized\e[39m"
-			tar cPzf $backup_path/$folder_path$DATE.tar.gz $folder_path
-			if [ $? == 0 ]; then
-				echo -e "\e[32m[$folder_path] backup successful!\e[39m"
-			else
-				echo -e "\e[91m[$folder_path] backup failed!\e[39m"
-			fi
-		fi
-	done
+  for db_name in ${db_names[*]}; do
+    if [ -e $backup_path/$db_name$DATE.sql ]; then
+      echo -e "\e[33m[$db_name] database backup skipped!\e[39m"
+    else
+      echo -e "\e[33m[$db_name] database backup initialized\e[39m"
+      # Check if the last character of backup_path is a "/", if not add it.
+      if [ "${backup_path:${#backup_path}-1:1}" != "/" ]; then
+        backup_path=$backup_path/
+      fi
+      sudo mysqldump --lock-tables -h $db_host -u $db_user -p$db_pass $db_name > $backup_path$db_name$DATE.sql
+      if [ $? == 0 ]; then
+        echo -e "\e[32m[$db_name] database backup successful!\e[39m"
+      else
+        echo -e "\e[91m[$db_name] database backup failed!\e[39m"
+      fi
+    fi
+  done
+  for folder_path in ${folder_paths[*]}; do
+    # Check if the last character of backup_path is a "/", if yes delete it.
+    if [ "${folder_path:${#folder_path}-1:1}" == "/" ]; then
+      folder_path="${folder_path::-1}"
+    fi
+    echo -e "\e[33m[$folder_path] backup initialized\e[39m"
+    if [ -e $backup_path/$folder_path$DATE.tar.gz ]; then
+      echo -e "\e[33m[$folder_path] backup skipped!\e[39m"
+    else
+      tar cPzf $backup_path/$folder_path$DATE.tar.gz $folder_path
+      if [ $? == 0 ]; then
+        echo -e "\e[32m[$folder_path] backup successful!\e[39m"
+      else
+        echo -e "\e[91m[$folder_path] backup failed!\e[39m"
+      fi
+    fi
+  done
 }
 
 backup
