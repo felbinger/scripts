@@ -17,5 +17,14 @@ while getopts ":l:c:k:" opt; do
   esac
 done
 
-python -c 'from uuid import uuid4; print("\n".join([str(uuid4()) for _ in range(0, '$count')]))'
+if [ -x $(which uuidgen) ]; then
+  for _ in $(seq 1 ${count}); do
+    uuidgen
+  done
+elif [ -x $(which python) ]; then
+  python -c 'from uuid import uuid4; print("\n".join([str(uuid4()) for _ in range(0, '$count')]))'
+else
+  echo "Unable to generate uuid. Please install the package util-linux"
+fi
+
 exit 0
