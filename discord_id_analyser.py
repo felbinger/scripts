@@ -24,5 +24,5 @@ def info(text):
 
 
 if __name__ == "__main__":
-    info(input("Gib die ID ein: "))
-    
+    info(input("ID: "))
+
