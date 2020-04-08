@@ -16,6 +16,8 @@ def get_networks():
                     subnet
                 ])
 
+    return networks
+
 
 if __name__ == "__main__":
     table = PrettyTable()
