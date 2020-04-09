@@ -2,7 +2,7 @@
 
 pw_lenght=20
 pw_count=1
-pw_keyset="A-Za-z0-9\!-\?"
+pw_keyset="A-Za-z0-9%+_~*.:,"
 
 while getopts ":l:c:k:" opt; do
   case $opt in
