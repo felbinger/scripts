@@ -1,4 +1,4 @@
-#!/usr/bin/python3.7
+#!/usr/bin/env python3.8
 
 from docker import from_env as docker_env
 from prettytable import PrettyTable
@@ -30,3 +30,4 @@ if __name__ == "__main__":
     table.align['Subnet'] = 'l'
     table.sortby = 'Subnet'
     print(table)
+
