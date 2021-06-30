@@ -1,7 +1,7 @@
 You can hide partitions (e. g. the Windows Boot Partition) from your file manager using a simple udev rule:
 1. Get the uuid of the partition:
     ```shell
-    udevadm info --query=all -n /dev/sdd2`
+    udevadm info --query=all -n /dev/sdd2 | grep ID_PART_ENTRY_UUID
     ```
 3. Create `/etc/udev/rules.d/99-hide-disks.rules`:
     ```shell
